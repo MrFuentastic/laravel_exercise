@@ -9,10 +9,8 @@ class BitcoinController extends Controller
     //
     public function index()
     {
-        $client = new \GuzzleHttp\Client();
-        $response = $client->get('https://api.coinmarketcap.com/v1/ticker/bitcoin');
-        $data = $response->getBody();
-        echo gettype($data);
-        return view('bitcoin.index');
+        $json = json_decode(file_get_contents('https://api.coinmarketcap.com/v1/ticker/bitcoin'), true);
+        $data = $json[0];
+        return view('bitcoin.index', $data);
     }
 }
